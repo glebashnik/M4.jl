@@ -34,9 +34,3 @@ end
 function predict(
     forecaster::T, train_dict::SeriesInfoDict, info_dict::SeriesInfoDict)::SeriesDict where T<:Forecaster
 end
-
-
-struct ForecastWindow
-    input::Vector{Float64}
-    output::Vector{Float64}
-end
