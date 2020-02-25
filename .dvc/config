@@ -1,0 +1,5 @@
+['remote "s3remote"']
+url = s3://gleb-projects/m4
+[core]
+remote = s3remote
+analytics = false

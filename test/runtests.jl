@@ -1,3 +1,5 @@
+module M4Test
+
 using M4
 using Test
 
