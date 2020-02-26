@@ -4,17 +4,17 @@ using Zygote: Buffer
 
 
 struct HoltWinters
-    input_size::Int64
-    output_size::Int64
-    freq::Int64
+    input_size
+    output_size
+    freq
     
-    level_smooth::Vector{Float64}
-    trend_smooth::Vector{Float64}
-    season_smooth::Vector{Float64}
+    level_smooth::Vector{Float32}
+    trend_smooth::Vector{Float32}
+    season_smooth::Vector{Float32}
     
-    level_init::Vector{Float64}
-    trend_init::Vector{Float64}
-    season_init::Vector{Float64}
+    level_init::Vector{Float32}
+    trend_init::Vector{Float32}
+    season_init::Vector{Float32}
 end
 
 
@@ -34,7 +34,7 @@ function HoltWinters(input_size, output_size, freq)
 end
     
 
-function (model::HoltWinters)(input::Vector{Float64})
+function (model::HoltWinters)(input)
     level_smooth = model.level_smooth[1]
     trend_smooth = model.level_smooth[1]
     season_smooth = model.season_smooth[1]

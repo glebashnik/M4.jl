@@ -1,3 +1,28 @@
+using Dates
+
+
+struct SeriesInfo
+    id::String
+    category::String
+    freq::UInt16
+    period::String
+    horizon::UInt16
+    start_time::DateTime
+end
+
+
+const SeriesValue = Float32
+
+
+const Series = Vector{SeriesValue}
+
+
+const SeriesDict = Dict{String, Series}
+
+
+const SeriesInfoDict = Dict{String, SeriesInfo}
+
+
 function read_series(file_path)
     data = SeriesDict()
     is_header = true

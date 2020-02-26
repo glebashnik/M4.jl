@@ -2,6 +2,7 @@ mutable struct NaiveForecaster <: Forecaster
     seasonal::Bool
 end
 
+
 function predict(forecaster::NaiveForecaster, train_dict, info_dict)
     forecast_dict = SeriesDict()
     

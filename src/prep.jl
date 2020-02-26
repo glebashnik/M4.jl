@@ -1,19 +1,20 @@
 using StatsBase
+using Flux
 
 
-function sample_keys(n::Int, dicts::Vararg{Dict})
+function sample_keys(n, dicts...)
     common_keys = intersect((collect(keys(d)) for d in dicts)...)
     sample(common_keys, n, replace=false)
 end
 
 
-function sample_dicts(n::Int, dicts::Vararg{Dict})
+function sample_dicts(n, dicts...)
     sampled_keys = sample_keys(n, dicts...) 
     Tuple(Dict(k => d[k] for k in sampled_keys) for d in dicts)
 end
 
 
-function sample_dicts!(n::Int, dicts::Vararg{Dict})
+function sample_dicts!(n, dicts...)
     sampled_keys = Set(sample_keys(n, dicts...))
 
     for dict in dicts, key in keys(dict)
@@ -24,14 +25,14 @@ function sample_dicts!(n::Int, dicts::Vararg{Dict})
 end
 
 
-function roll_window(y::Vector{Float64}, input_size::Int64, output_size::Int64)
-    windows = Vector{Tuple{Vector{Float64}, Vector{Float64}}}()
-
-    for i in input_size:length(y) - output_size
-        input = y[i + 1 - input_size:i]
-        output = y[i + 1:i + output_size]
-        push!(windows, (input,output))
+function roll_window(series, input_size, output_size)
+    inputs = Vector()
+    outputs = Vector()
+     
+    for i in input_size:length(series) - output_size
+        push!(inputs, series[i + 1 - input_size:i])
+        push!(outputs, series[i + 1:i + output_size])
     end
 
-    windows
+    reduce(hcat, inputs), reduce(hcat, outputs)
 end

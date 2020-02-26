@@ -1,5 +1,29 @@
 using Statistics
 
+
+abstract type Forecaster 
+end
+
+
+function train!(
+    forecaster::T, train_dict::SeriesDict, info_dict::SeriesInfoDict) where T<:Forecaster 
+end
+
+
+function predict(
+    forecaster::T, train_dict::SeriesInfoDict, info_dict::SeriesInfoDict)::SeriesDict where T<:Forecaster
+end
+
+
+struct ForecastScore
+    smape
+    mase
+end
+
+
+const ForecastScoreDict = Dict{String, ForecastScore}
+
+
 function calc_mae(y, y_hat)
     mean(abs.(y_hat .- y))
 end
@@ -15,6 +39,7 @@ function calc_mase(y_train, y_test, y_hat, freq)
     mae_test / mae_train_naive
 end
 
+
 function split_series(series_dict::SeriesDict, info_dict::SeriesInfoDict)
     train_data = SeriesDict()
     test_data = SeriesDict()
@@ -28,6 +53,7 @@ function split_series(series_dict::SeriesDict, info_dict::SeriesInfoDict)
 
     train_data, test_data
 end
+
 
 function evaluate(forecaster::T, train_dict, test_dict, info_dict) where T<:Forecaster
     train!(forecaster, train_dict, info_dict)
@@ -47,6 +73,7 @@ function evaluate(forecaster::T, train_dict, test_dict, info_dict) where T<:Fore
 
     score_dict
 end
+
 
 function calc_stats(score_dict::ForecastScoreDict)
     scores = values(score_dict)
